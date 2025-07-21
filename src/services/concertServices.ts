@@ -21,6 +21,7 @@ export const getAllConcerts = async (): Promise<Concert[]> => {
     const result = await pool.query(CONCERT_QUERIES.GET_ALL_CONCERTS);
     return result.rows;
   } catch (error) {
+    console.error('DB error:', error);
     throw new AppError("Failed to retrieve concerts", 500);
   }
 };

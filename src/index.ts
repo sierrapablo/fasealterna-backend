@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
+import { pool } from './db/pool';
+
 import { errorHandler } from './middlewares/errorHandler';
 
 import concertRoutes from './routes/concertRoutes';
@@ -16,12 +18,18 @@ app.use('/api/concerts', concertRoutes);
 
 app.use(errorHandler);
 
-(async () => {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-})().catch((error) => {
-  console.error(`Failed to start the server: ${error}`);
-  process.exit(1);
+const port = process.env.PORT || 3000;
+
+app.get('/ping-db', async (_req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.send(`DB responded at: ${result.rows[0].now}`);
+  } catch (err) {
+    console.error('DB connection error:', err);
+    res.status(500).send('Database connection failed');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });
