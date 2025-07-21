@@ -18,7 +18,7 @@ app.use('/api/concerts', concertRoutes);
 
 app.use(errorHandler);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.get('/ping-db', async (_req, res) => {
   try {
@@ -30,6 +30,6 @@ app.get('/ping-db', async (_req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${port}`);
 });
