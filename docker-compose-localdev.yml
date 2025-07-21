@@ -1,0 +1,18 @@
+services:
+  api:
+    container_name: fasealterna-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    command: sh -c "npm run build && node dist/index.js"
+    restart: unless-stopped
+    networks:
+      - fasealterna-backend-dev
+
+networks:
+  fasealterna-backend-dev:
+    driver: bridge
