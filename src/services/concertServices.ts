@@ -1,6 +1,6 @@
-import { pool } from "../db/pool";
-import { CONCERT_QUERIES } from "../db/queries/concertQueries";
-import { AppError } from "../utils/AppError";
+import { pool } from '../db/pool';
+import { CONCERT_QUERIES } from '../db/queries/concertQueries';
+import { AppError } from '../utils/AppError';
 
 export interface Concert {
   id: string;
@@ -22,6 +22,6 @@ export const getAllConcerts = async (): Promise<Concert[]> => {
     return result.rows;
   } catch (error) {
     console.error('DB error:', error);
-    throw new AppError("Failed to retrieve concerts", 500);
+    throw new AppError('Failed to retrieve concerts', 500);
   }
 };

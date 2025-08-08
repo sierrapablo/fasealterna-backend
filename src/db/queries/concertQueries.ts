@@ -3,5 +3,5 @@ export const CONCERT_QUERIES = {
     SELECT date, venue, link FROM concerts
     WHERE visible = true
     ORDER BY date_tz DESC
-  `
+  `,
 };
