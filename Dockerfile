@@ -10,6 +10,7 @@ RUN pnpm install
 
 COPY . .
 
+RUN pnpm exec prisma generate
 RUN pnpm run build
 
 RUN pnpm prune --prod
