@@ -27,3 +27,4 @@ dist-ssr
 *.sw?
 
 gitzen.config.json
+/src/generated/prisma

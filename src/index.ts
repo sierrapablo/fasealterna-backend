@@ -2,8 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
-import { pool } from './db/pool';
-
+import { PrismaClient } from '@prisma/client';
 import { errorHandler } from './middlewares/errorHandler';
 
 import concertRoutes from './routes/concertRoutes';
@@ -19,13 +18,14 @@ app.use('/api/concerts', concertRoutes);
 app.use(errorHandler);
 
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const prisma = new PrismaClient();
 
 app.get('/ping-db', async (_req, res) => {
   try {
-    const result = await pool.query('SELECT NOW()');
-    res.send(`DB responded at: ${result.rows[0].now}`);
+    const count = await prisma.concert.count();
+    res.send(`MongoDB connected, concerts collection has ${count} documents.`);
   } catch (err) {
-    console.error('DB connection error:', err);
+    console.error('MongoDB connection error:', err);
     res.status(500).send('Database connection failed');
   }
 });
